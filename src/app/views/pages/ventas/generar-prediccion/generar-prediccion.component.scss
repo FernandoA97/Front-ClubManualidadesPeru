@@ -1,0 +1,152 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+
+  .filter-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    input, select {
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #aaa;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: #36A2EB;
+      color: white;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #2b8cd1;
+      }
+    }
+  }
+}
+
+.chart-container {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.predicciones-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 0.5rem 0.7rem;
+    text-align: center;
+  }
+
+  th {
+    background-color: #f0f0f0;
+  }
+}
+
+.no-data {
+  margin-top: 1rem;
+  color: gray;
+  font-style: italic;
+}
+
+
+
+
+
+.chart-table-container {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+
+  .chart-container {
+    flex: 2; /* ocupa más espacio */
+    canvas {
+      width: 100% !important;
+      max-width: 600px;
+      height: 400px !important;
+    }
+  }
+
+  .table-container {
+    flex: 1; /* ocupa menos espacio */
+    overflow-x: auto;
+    max-height: 400px;
+
+    table.predicciones-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th, td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        text-align: center;
+      }
+
+      th {
+        background-color: #f0f0f0;
+      }
+    }
+  }
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+
+  .filter-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 6px 12px;
+  }
+}
+
+
+.preloader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 20px 0;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #36A2EB;
+  border-radius: 50%;
+  animation: girar 1s linear infinite;
+}
+
+@keyframes girar {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

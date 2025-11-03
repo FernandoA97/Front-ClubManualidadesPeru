@@ -1,0 +1,104 @@
+<div class="container mt-1">
+
+  <!-- FILTROS -->
+  <div class="row mb-3">
+    <div class="col">
+      <div class="card p-3 shadow-sm">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+          <!-- Filtros de fecha -->
+          <div class="d-flex gap-3 flex-wrap">
+
+            <div>
+              <label class="form-label">Desde</label>
+              <input type="date" class="form-control"
+                     [(ngModel)]="fechaDesde">
+            </div>
+
+            <div>
+              <label class="form-label">Hasta</label>
+              <input type="date" class="form-control"
+                     [(ngModel)]="fechaHasta">
+            </div>
+
+            <div class="align-self-end">
+              <button class="btn btn-primary" (click)="filtrarVentas()">
+                Filtrar
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Botón Nueva Venta -->
+          <div class="align-self-end mt-3 mt-md-0">
+            <button class="btn btn-success" style="color:white;"
+                  >
+              Nueva Venta
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="row">
+    <div class="col">
+      <div class="card p-3 shadow-sm">
+        <h5 class="card-title text-secondary">Registros de ventas importados</h5>
+
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Serie</th>
+                <th>Número</th>
+                <th>Monto Total</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let venta of paginatedVentas; let i = index">
+                <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+                <td>{{ venta.fechaDeMision | date:'shortDate' }}</td>
+                <td>{{ venta.nombreCliente }}</td>
+                <td>{{ venta.serie }}</td>
+                <td>{{ venta.numero }}</td>
+                <td>{{ venta.montoTotal | currency:'USD' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- PAGINADOR -->
+        <div class="d-flex justify-content-center mt-3">
+
+          <button class="btn btn-outline-primary me-2"
+                  (click)="changePage(currentPage - 1)"
+                  [disabled]="currentPage === 1">
+            Anterior
+          </button>
+
+          <span class="mx-3">
+            Página {{ currentPage }} de {{ totalPages }}
+          </span>
+
+          <button class="btn btn-outline-primary ms-2"
+                  (click)="changePage(currentPage + 1)"
+                  [disabled]="currentPage === totalPages">
+            Siguiente
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

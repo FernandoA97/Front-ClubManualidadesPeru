@@ -1,0 +1,112 @@
+<div class="container mt-1">
+
+  <div class="row">
+
+    <!-- COLUMNA IZQUIERDA: IMPORTAR EXCEL -->
+    <div class="col-md-4">
+      <div class="card p-4 shadow-sm">
+        <h5 class="text-secondary mb-3">Importar Ventas</h5>
+
+        <!-- input archivo -->
+        <div class="form-group mb-3">
+          <label for="fileInput" class="form-label">Subir archivo Excel</label>
+          <input
+            type="file"
+            class="form-control"
+            id="fileInput"
+            accept=".xlsx, .xls"
+            (change)="onFileSelected($event)"
+          />
+        </div>
+
+        <!-- botón importar -->
+        <button class="btn btn-success w-100" (click)="importarExcel()" style="color:white;margin-bottom:10px;">
+          Importar registros
+        </button>
+         <button class="btn btn-primary w-100" (click)="importarExcel()" style="color:white;">
+          Descargar Plantilla
+        </button>
+
+        <!-- loader -->
+        <div *ngIf="isLoading" class="text-center mt-3">
+          <div class="spinner-border text-primary"
+               role="status"
+               style="width: 3rem; height: 3rem;">
+          </div>
+          <p class="mt-2">Importando registros, por favor espere...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: TABLA DE VENTAS -->
+    <div class="col-md-8">
+      <div class="card p-3 shadow-sm">
+        <h5 class="card-title text-secondary">Historial de importaciones</h5>
+
+        <!-- tabla -->
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Fecha Importacion</th>
+                <th>Usuario</th>
+                <th>Importados</th>
+                <th>Rechazados</th>
+                <th>Duplicados</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let venta of paginatedVentas; let i = index">
+                <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+                <td>{{ venta.fechaImportacion| date:'shortDate' }}</td>
+                <td>{{ venta.usuario }}</td>
+                <td>{{ venta.registrosValidos }}</td>
+               
+  <td>{{ venta.registrosRechazados }}</td>
+    <td>{{ venta.registrosDuplicados }}</td>
+    <td>
+  <span 
+    class="badge"
+    [ngClass]="{
+      'bg-success text-white': venta.estado === 'EXT',
+      'bg-danger text-white': venta.estado === 'ERR'
+    }">
+
+    {{ venta.estado === 'EXT' ? 'Éxito' : 'Error' }}
+
+  </span>
+</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- paginación -->
+        <div class="d-flex justify-content-center mt-3">
+
+          <button class="btn btn-outline-primary me-2"
+                  (click)="changePage(currentPage - 1)"
+                  [disabled]="currentPage === 1">
+            Anterior
+          </button>
+
+          <span class="mx-3">
+            Página {{ currentPage }} de {{ totalPages }}
+          </span>
+
+          <button class="btn btn-outline-primary ms-2"
+                  (click)="changePage(currentPage + 1)"
+                  [disabled]="currentPage === totalPages">
+            Siguiente
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="filters">
+  <!-- Horizonte de predicción -->
+  <div class="filter-item">
+    <label>Horizonte Predicción:</label>
+    <select [(ngModel)]="filtros.horizontePrediccion">
+      <option *ngFor="let h of horizontes" [value]="h.value">{{ h.label }}</option>
+    </select>
+  </div>
+
+  <!-- Región -->
+  <div class="filter-item">
+    <label>Región:</label>
+    <select [(ngModel)]="filtros.region">
+      <option value="">Todas</option>
+      <option *ngFor="let r of regiones" [value]="r">{{ r }}</option>
+    </select>
+  </div>
+
+  <!-- Método de pago -->
+  <div class="filter-item">
+    <label>Método de pago:</label>
+    <select [(ngModel)]="filtros.metodoPago">
+      <option value="">Todos</option>
+      <option *ngFor="let m of metodosPago" [value]="m">{{ m }}</option>
+    </select>
+  </div>
+
+  <!-- Botón para generar predicción -->
+  <div class="filter-item">
+    <button (click)="generarPrediccion()">Generar Predicción</button>
+  </div>
+</div>
+
+<!-- Loader -->
+<div *ngIf="cargando" class="preloader-container">
+  <div class="spinner"></div>
+  <span>Cargando predicciones...</span>
+</div>
+
+<!-- Contenedor gráfico + tabla -->
+<div class="chart-table-container" *ngIf="!cargando && predicciones.length > 0">
+  <div class="chart-container">
+    <canvas #grafico></canvas>
+  </div>
+
+  <div class="table-container">
+    <table class="predicciones-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Predicción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of predicciones">
+          <td>{{ p.fecha | date:'shortDate' }}</td>
+          <td>{{ p.prediccion | number:'1.0-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Mensaje si no hay datos -->
+<div *ngIf="!cargando && predicciones.length === 0" class="no-data">
+  No hay predicciones generadas.
+</div>
