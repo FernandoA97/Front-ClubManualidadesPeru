@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ProductosRelacionadosComponent } from './scraping/productos-relacionados/productos-relacionados.component';
 
 export const routes: Routes = [
   {
@@ -41,6 +42,20 @@ export const routes: Routes = [
     loadComponent: () => import('./ventas/generar-prediccion/generar-prediccion.component').then(m => m.GenerarPrediccionComponent),
     data: {
       title: 'Generar Prediccion'
+    }
+  },
+   {
+    path: 'productos-relacionados',
+    loadComponent: () => import('./scraping/productos-relacionados/productos-relacionados.component').then(m => m.ProductosRelacionadosComponent),
+    data: {
+      title: 'Productos Relacionados'
+    }
+  },
+   {
+    path: 'tendencias',
+    loadComponent: () => import('./scraping/tendencias/tendencias.component').then(m => m.TendenciasComponent),
+    data: {
+      title: 'Tendencias'
     }
   }
 ];

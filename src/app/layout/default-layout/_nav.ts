@@ -28,6 +28,16 @@ export const navItems: INavData[] = [
     name: 'Generar Prediccion',
     url: '/pages/generar-prediccion',
     iconComponent: { name: 'cil-pencil' }
+  },
+  {
+    name: 'Productos Relacionados',
+    url: '/pages/productos-relacionados',
+    iconComponent: { name: 'cil-pencil' }
+  },
+  {
+    name: 'Tendencias',
+    url: '/pages/tendencias',
+    iconComponent: { name: 'cil-pencil' }
   }
   /*{
     name: 'Components',

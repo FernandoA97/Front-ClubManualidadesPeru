@@ -1,0 +1,86 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Productos Relacionados</h2>
+
+  <!-- Filtros -->
+  <div class="d-flex justify-content-center align-items-center mb-4 flex-wrap gap-3">
+    <div class="form-group">
+      <label for="fuente" class="fw-semibold me-2">Fuente:</label>
+      <select
+        id="fuente"
+        class="form-select d-inline-block w-auto"
+        [(ngModel)]="fuenteSeleccionada"
+        [disabled]="isLoading">
+        <option value="">Seleccione</option>
+        <option value="entrelanas">Entrelanas.pe</option>
+        <option value="lanapolis">LanaPolis.pe</option>
+      </select>
+    </div>
+
+    <button
+      class="btn btn-primary px-4"
+      (click)="consultarProductos()"
+      [disabled]="isLoading || !fuenteSeleccionada">
+      <span *ngIf="!isLoading">Consultar</span>
+      <span *ngIf="isLoading">
+        <i class="spinner-border spinner-border-sm me-2"></i> Consultando...
+      </span>
+    </button>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!isLoading && error" class="alert alert-danger text-center">
+    {{ error }}
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="isLoading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-2">Cargando productos desde {{ fuenteSeleccionada | titlecase }}...</p>
+  </div>
+
+  <!-- Lista de productos -->
+  <div *ngIf="!isLoading && productos.length > 0" class="row g-4">
+    <div class="col-md-3" *ngFor="let p of paginatedProductos">
+      <div class="card h-100 shadow-sm">
+        <img [src]="p.imagen" class="card-img-top" alt="{{ p.nombre }}">
+        <div class="card-body">
+          <h5 class="card-title text-truncate" title="{{ p.nombre }}">{{ p.nombre }}</h5>
+          <p class="card-text fw-semibold text-success">S/ {{ p.precio | number:'1.2-2' }}</p>
+          <p class="text-muted small mb-0">{{ p.fecha_consulta }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sin resultados -->
+  <div *ngIf="!isLoading && consultaRealizada && productos.length === 0 && !error" class="text-center text-muted mt-4">
+    <p>No se encontraron productos en {{ fuenteSeleccionada | titlecase }}.</p>
+  </div>
+
+  <!-- Paginación -->
+  <nav *ngIf="!isLoading && totalPages > 1" class="mt-4 d-flex justify-content-center">
+    <ul class="pagination flex-wrap justify-content-center mb-0">
+      <!-- Botón Anterior -->
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="changePage(currentPage - 1)">Anterior</a>
+      </li>
+
+      <!-- Números de página (condensado con '...') -->
+      <ng-container *ngFor="let page of visiblePages()">
+        <li *ngIf="page === '...'" class="page-item disabled">
+          <span class="page-link">...</span>
+        </li>
+        <li *ngIf="page !== '...'" class="page-item" [class.active]="currentPage === page">
+          <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+        </li>
+      </ng-container>
+
+      <!-- Botón Siguiente -->
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="changePage(currentPage + 1)">Siguiente</a>
+      </li>
+    </ul>
+  </nav>
+</div>

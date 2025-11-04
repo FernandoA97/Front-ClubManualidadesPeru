@@ -39,7 +39,7 @@ export interface HistorialImportacion {
   estado: string;
 }
 
-// 🔹 Solo los filtros que necesitamos
+//  Solo los filtros que necesitamos
 export interface FiltrosRequest {
   HorizontePrediccion: string; // Ej: '7dias', '1mes', '3meses', '1año'
   Region: string;
@@ -84,7 +84,7 @@ export class VentasService {
     return this.http.post<any>(this.apiUpload, formData);
   }
 
-  // 🔹 Método actualizado para enviar solo los 3 filtros requeridos
+  //  Método actualizado para enviar solo los 3 filtros requeridos
   obtenerPredicciones(filtros: FiltrosRequest): Observable<PrediccionesResponse> {
     return this.http.post<PrediccionesResponse>(this.basePredicc, filtros);
   }
